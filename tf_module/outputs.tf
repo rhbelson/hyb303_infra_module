@@ -15,7 +15,7 @@ output "local_zone_ssh" {
 
 output "bastion_ssh" {
   description = "Command to SSH into Bastion Host Instance"
-  value = "ssh -i -A ${var.worker_key_name}.pem ec2-user@${aws_eip.wlz-ip["las"].public_ip}"
+  value = "ssh -i -A ${var.worker_key_name}.pem ec2-user@${aws_instance.bastion_host_instance.public_ip}"
 }
 
 output "wavelength_ssh" {

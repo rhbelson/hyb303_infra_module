@@ -35,7 +35,18 @@ After running this infrastructure template, you will get:
 2) EC2 instnace in the Local Zone for Pixel Streaming & WebRTC Streaming
 3) Hybrid Edge (AZ/LZ/WLZ) EKS Cluster for MongoDB Lab
 
-To view the IP addresses of your core infrastructure, take a look at the Terraform-generated outputs:
+To view the IP addresses of your core infrastructure, take a look at the Terraform-generated outputs (see example):
+```
+Outputs:
+
+local_zone_IP = "15.220.18.193"
+bastion_ssh = "ssh -i -A test_key_uswest2.pem ec2-user@34.213.4.194"
+my_ip_addr = "44.204.89.131"
+local_zone_ssh = "ssh -i test_key_uswest2.pem ubuntu@15.220.18.193"
+wavelength_zone_IP = "155.146.115.70"
+wavelength_ssh = "ssh -i test_key_uswest2.pem ubuntu@10.0.10.50"
+```
+
 
 To configure the Amazon EKS cluster, export the locally-generated kubeconfig and view your nodes:
 ```

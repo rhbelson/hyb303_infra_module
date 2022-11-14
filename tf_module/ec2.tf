@@ -19,8 +19,8 @@ variable "iperf_ami" {
 variable "bastion_ami" {
   type = map(string)
   default = {
-    "us-east-1" = "ami-0fc7dad598dd37e11"
-    "us-west-2" = "ami-0045a9e5f2af86401"
+    "us-east-1" = "ami-09d3b3274b6c5d4aa"
+    "us-west-2" = "ami-0d593311db5abb72b"
   }
 }
 
@@ -36,7 +36,6 @@ locals {
 
 # Create Bastion Host
 resource "aws_instance" "bastion_host_instance" {
-  count                       = 1
   ami                         = lookup(var.bastion_ami, var.region)
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.region_subnets["az1"].id

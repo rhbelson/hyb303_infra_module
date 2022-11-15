@@ -36,7 +36,7 @@ variable "bastion_ami" {
 # }
 
 # Create Bastion Host
-resource "aws_ebs_encryption_by_default" "example" {
+resource "aws_ebs_encryption_by_default" "default_encryption_rule" {
   enabled = true
 }
 resource "aws_instance" "bastion_host_instance" {

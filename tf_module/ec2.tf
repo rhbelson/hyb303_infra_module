@@ -7,6 +7,7 @@ variable "webrtc_ami" {
   }
 }
 
+# Create AMI Mapping for iPerf Host
 variable "iperf_ami" {
   type = map(string)
   default = {
@@ -24,17 +25,20 @@ variable "bastion_ami" {
   }
 }
 
-data "http" "my_public_ip" {
-  url = "https://ifconfig.co/json"
-  request_headers = {
-    Accept = "application/json"
-  }
-}
-locals {
-  ifconfig_co_json = jsondecode(data.http.my_public_ip.body)
-}
+# data "http" "my_public_ip" {
+#   url = "https://ifconfig.co/json"
+#   request_headers = {
+#     Accept = "application/json"
+#   }
+# }
+# locals {
+#   ifconfig_co_json = jsondecode(data.http.my_public_ip.body)
+# }
 
 # Create Bastion Host
+resource "aws_ebs_encryption_by_default" "example" {
+  enabled = true
+}
 resource "aws_instance" "bastion_host_instance" {
   ami                         = lookup(var.bastion_ami, var.region)
   instance_type               = "t2.micro"
@@ -42,6 +46,11 @@ resource "aws_instance" "bastion_host_instance" {
   key_name                    = var.worker_key_name
   security_groups             = [aws_security_group.bastion_security_group.id]
   associate_public_ip_address = true
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required" 
+  }
   tags = {
     Name = "wavelength-bastion-host"
   }
@@ -55,6 +64,11 @@ resource "aws_instance" "webrtc_instance" {
   subnet_id       = aws_subnet.localzones_subnets[each.key].id
   key_name        = var.worker_key_name
   security_groups = [aws_security_group.webrtc_security_group.id]
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required" 
+  }
   tags = {
     Name = "HYB303-module2-webrtc-localzones"
   }
@@ -67,7 +81,8 @@ resource "aws_security_group" "bastion_security_group" {
   name        = "bastion-sg"
   description = "Security group for bastion host EC2 instance"
   ingress {
-    cidr_blocks = ["${local.ifconfig_co_json["ip"]}/32"]
+    # cidr_blocks = ["${local.ifconfig_co_json["ip"]}/32"]
+    cidr_blocks = ["0.0.0.0/0"]
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
@@ -168,6 +183,11 @@ resource "aws_instance" "iperf_instance" {
   subnet_id       = aws_subnet.wavelength_subnets[each.key].id
   key_name        = var.worker_key_name
   security_groups = [aws_security_group.iperf_security_group.id]
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 2
+    http_tokens                 = "required" 
+  }
   tags = {
     Name = "HYB303-module1-iperf-iperf"
   }

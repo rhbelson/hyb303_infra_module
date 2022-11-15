@@ -9,6 +9,7 @@ locals {
 # Create security group for edge resources
 resource "aws_security_group_rule" "realm_app_ingress_rule" {
   type              = "ingress"
+  description      = "TCP ports for Realm application NodePorts"
   from_port         = 31000
   to_port           = 31003
   protocol          = "tcp"

@@ -9,6 +9,10 @@ resource "aws_vpc" "hyb303_vpc" {
   }
 }
 
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.hyb303_vpc.id
+}
+
 # Create subnets in parent region; coredns runs here
 resource "aws_subnet" "region_subnets" {
   for_each = var.availability_zones

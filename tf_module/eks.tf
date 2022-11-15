@@ -28,7 +28,7 @@ module "eks_cluster" {
   manage_aws_auth              = true
   manage_cluster_iam_resources = true
   manage_worker_iam_resources  = true
-
+  cluster_enabled_log_types = ["audit","api","authenticator"]
   worker_create_security_group                       = true
   worker_create_cluster_primary_security_group_rules = true
 

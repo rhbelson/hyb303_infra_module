@@ -23,6 +23,6 @@ output "wavelength_ssh" {
   value = "ssh -i ${var.worker_key_name}.pem ubuntu@${aws_instance.iperf_instance["las"].private_ip}"
 }
 
-output "my_ip_addr" {
-  value = local.ifconfig_co_json.ip
-}
+# output "my_ip_addr" {
+#   value = local.ifconfig_co_json.ip
+# }

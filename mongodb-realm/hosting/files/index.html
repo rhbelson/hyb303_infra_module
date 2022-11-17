@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Loading...</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link href="style.css" rel="stylesheet" />
+        <script>
+            $(function() {
+                var appIdHacking = window.location.hostname.split(".")[0];
+                $.get( "https://us-east-1.aws.data.mongodb-api.com/app/"+appIdHacking+"/endpoint/whichMEC", function( data ) {
+                    console.log(data);
+                    $( "#heading" ).html( "Sending you to " +data+ "..." );
+                    //window.location = data;
+                    var i = document.createElement("iframe");
+                    i.src = data;
+                    i.width = "100%";
+                    i.height="100%";
+                    $(".ctr_spin_parent").fadeOut(500).next().delay(500);
+                    $("body").append(i).fadeIn(1000);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="ctr_spin_parent">
+            <h1 id="heading">Redirecting you to your nearest MEC site...</h1>
+            <div class="ctr_spin_child">
+                <img src="leaf.png" class="aniloader"/>
+            </div>
+        </div>
+    </body>
+</html>

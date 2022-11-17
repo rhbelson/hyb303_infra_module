@@ -23,7 +23,7 @@ Should you choose to rename the key, please adjust the variable `worker_key_name
 
 To run the infrastructure template, clone this repo and run the following:
 ```
-git clone [repo-url].git
+git clone https://github.com/rhbelson/hyb303_infra_module.git
 cd [repo-name]
 terraform init
 terraform apply -auto-approve

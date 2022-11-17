@@ -1,0 +1,24 @@
+{
+    "bsonType": "object",
+    "properties": {
+        "_id": {
+            "bsonType": "objectId"
+        },
+        "_pk": {
+            "bsonType": "string"
+        },
+        "location": {
+            "bsonType": "string"
+        },
+        "value": {
+            "bsonType": "long"
+        }
+    },
+    "required": [
+        "_id",
+        "_pk",
+        "location",
+        "value"
+    ],
+    "title": "Reading"
+}

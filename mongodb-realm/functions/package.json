@@ -1,0 +1,14 @@
+{
+  "name": "realm-iot-demo",
+  "version": "1.0.0",
+  "description": "\"Test application using Verizon 5G Edge with MongoDB\"",
+  "main": "whichMEC.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robbie Belson (Verizon). Chris Grabosky (MongoDB)",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "qt": "^0.1.0"
+  }
+}

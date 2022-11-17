@@ -1,0 +1,7 @@
+{
+    "enabled": true,
+    "mongo_service_name": "mongodb-atlas",
+    "database_name": "edsapp",
+    "collection_name": "cud",
+    "user_id_field": "_pk"
+}

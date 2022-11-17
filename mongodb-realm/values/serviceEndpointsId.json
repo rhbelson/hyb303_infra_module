@@ -1,0 +1,5 @@
+{
+  "name": "serviceEndpointsId",
+  "value": "<your-service-endpoints-id>",
+  "from_secret": false
+}

@@ -16,7 +16,7 @@ fqdns=[]
 endpointIds=[]
 for w in wavelengthZones:
     fqdns.append(str(w[14:16])+"application.service.com")
-    endpointIds.append(str("endpoint_")+str(w[14:16]))
+    endpointIds.append(str("endpoint_")+str(w[14:16])+str(random.randint(1,1000)))
 
 """
 Step 1: Authenticate to Verizon Edge Discovery Service
@@ -24,7 +24,7 @@ Step 1: Authenticate to Verizon Edge Discovery Service
 eds = VzEdgeDiscovery()
 access_token=eds.authenticate(
     app_key="<your-app-key>",
-    secret_key="<your-secrey-key>")
+    secret_key="<your-secret-key>")
 
 """
 Step 2: Generate Service Profile

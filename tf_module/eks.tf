@@ -16,6 +16,10 @@ provider "kubernetes" {
   }
 }
 
+
+data "http" "ip" {
+  url = "https://ifconfig.me/ip"
+}
 module "eks_cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
@@ -28,6 +32,10 @@ module "eks_cluster" {
   manage_aws_auth              = true
   manage_cluster_iam_resources = true
   manage_worker_iam_resources  = true
+  
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access_cidrs = ["${data.http.ip.response_body}/32"]
   cluster_enabled_log_types = ["audit","api","authenticator"]
   worker_create_security_group                       = true
   worker_create_cluster_primary_security_group_rules = true
@@ -43,3 +51,54 @@ module "eks_cluster" {
     }
   ]
 }
+
+# Create VPC Endpoints for Private Access
+resource "aws_vpc_endpoint" "s3_gw_endpoint" {
+  vpc_id       = aws_vpc.hyb303_vpc.id
+  service_name = "com.amazonaws.${var.region}.s3"
+  vpc_endpoint_type= "Gateway"
+  route_table_ids= [aws_route_table.WLZ_route_table.id]
+  tags = {
+    Name = "s3-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "ec2_int_endpoint" {
+  vpc_id       = aws_vpc.hyb303_vpc.id
+  service_name = "com.amazonaws.${var.region}.ec2"  
+  private_dns_enabled = true
+  vpc_endpoint_type= "Interface"
+  subnet_ids = [aws_subnet.region_subnets["az1"].id,aws_subnet.region_subnets["az2"].id]
+  security_group_ids = [module.eks_cluster.cluster_primary_security_group_id]
+  tags = {
+    Name = "ec2-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "ecr_endpoint" {
+  vpc_id       = aws_vpc.hyb303_vpc.id
+  service_name = "com.amazonaws.${var.region}.ecr.api"  
+  private_dns_enabled = true
+  vpc_endpoint_type= "Interface"
+  subnet_ids = [aws_subnet.region_subnets["az1"].id,aws_subnet.region_subnets["az2"].id]
+  security_group_ids = [module.eks_cluster.cluster_primary_security_group_id]
+  tags = {
+    Name = "ecr-endpoint"
+  }
+}
+
+resource "aws_vpc_endpoint" "ecr_dkr_endpoint" {
+  vpc_id       = aws_vpc.hyb303_vpc.id
+  service_name = "com.amazonaws.${var.region}.ecr.dkr"  
+  private_dns_enabled = true
+  vpc_endpoint_type= "Interface"
+  subnet_ids = [aws_subnet.region_subnets["az1"].id,aws_subnet.region_subnets["az2"].id]
+  security_group_ids = [module.eks_cluster.cluster_primary_security_group_id]
+  tags = {
+    Name = "ecr-dkr-endpoint"
+  }
+}
+
+
+
+

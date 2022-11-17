@@ -16,8 +16,10 @@ aws ec2 modify-availability-zone-group —group-name us-west-2-wl1 —opt-in-sta
 ```
 
 2) Generated a Key Pair to use in the region (defaults to `us-west-2`). If you have not done so, please run the following:
-aws ec2 create-key-pair --key-name edge-key --query 'KeyMaterial' --output text > test_key_uswest2.pem
+```
+aws ec2 create-key-pair --key-name test_key_uswest2 --query 'KeyMaterial' --output text > test_key_uswest2.pem
 chmod 400 test_key_uswest2.pem
+```
 
 Should you choose to rename the key, please adjust the variable `worker_key_name` in the variables.tf file.
 

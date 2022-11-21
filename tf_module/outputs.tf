@@ -15,12 +15,12 @@ output "local_zone_ssh" {
 
 output "bastion_ssh" {
   description = "Command to SSH into Bastion Host Instance"
-  value = "ssh -i -A ${var.worker_key_name}.pem ec2-user@${aws_instance.bastion_host_instance.public_ip}"
+  value = "ssh -i "${var.worker_key_name}.pem" -A ec2-user@${aws_instance.bastion_host_instance.public_ip}"
 }
 
 output "wavelength_ssh" {
   description = "Command to SSH into Wavelength Zone Instance"
-  value = "ssh -i ${var.worker_key_name}.pem ubuntu@${aws_instance.iperf_instance["las"].private_ip}"
+  value = "ssh ubuntu@${aws_instance.iperf_instance["las"].private_ip}"
 }
 
 # output "my_ip_addr" {

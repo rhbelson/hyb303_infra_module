@@ -39,6 +39,8 @@ module "eks_cluster" {
   cluster_enabled_log_types = ["audit","api","authenticator"]
   worker_create_security_group                       = true
   worker_create_cluster_primary_security_group_rules = true
+  
+  depends_on=[aws_instance.bastion_host_instance, aws_instance.webrtc_instance,aws_instance.iperf_instance]
 
   write_kubeconfig = true
 

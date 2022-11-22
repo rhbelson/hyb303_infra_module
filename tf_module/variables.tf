@@ -51,7 +51,7 @@ variable "local_zones" {
       availability_zone    = "us-west-2-las-1a",
       network_border_group = "us-west-2-las-1"
       availability_zone_id = "usw2-las1-az1",
-      worker_nodes         = 1,
+      worker_nodes         = 0,
       cidr_block           = "10.0.20.0/24"
     },
     # lax = {
@@ -89,7 +89,7 @@ variable "worker_volume_size" {
 }
 
 variable "worker_instance_type" {
-  default = "t3.xlarge"
+  default = "t3.medium"
   validation {
     condition     = contains(["t3.medium", "t3.xlarge", "r5.2xlarge", "g4dn.2xlarge"], var.worker_instance_type)
     error_message = "Valid values for instance types are t3.medium, t3.xlarge, r5.2xlarge, and g4dn.2xlarge."

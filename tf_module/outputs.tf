@@ -23,6 +23,21 @@ output "wavelength_ssh" {
   value = "ssh ubuntu@${aws_instance.iperf_instance["las"].private_ip}"
 }
 
+output "vpc_id" {
+  description = "ID of your Virtual Private Cloud (VPC)"
+  value= aws_vpc.hyb303_vpc.id
+}
+output "region_subnet_1_id" {
+  description = "ID of your 1st parent region subnet"
+  value = aws_subnet.region_subnets["az1"].id
+}
+output "region_subnet_2_id" {
+  description = "ID of your 2nd parent region subnet"
+  value = aws_subnet.region_subnets["az2"].id
+}
+
+
+
 # output "my_ip_addr" {
 #   value = local.ifconfig_co_json.ip
 # }

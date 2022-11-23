@@ -6,16 +6,15 @@
         <script>
             $(function() {
                 var appIdHacking = window.location.hostname.split(".")[0];
+                console.log(appIdHacking);
                 $.get( "https://us-east-1.aws.data.mongodb-api.com/app/"+appIdHacking+"/endpoint/whichMEC", function( data ) {
                     console.log(data);
                     $( "#heading" ).html( "Sending you to " +data+ "..." );
-                    //window.location = data;
-                    var i = document.createElement("iframe");
-                    i.src = data;
-                    i.width = "100%";
-                    i.height="100%";
-                    $(".ctr_spin_parent").fadeOut(500).next().delay(500);
-                    $("body").append(i).fadeIn(1000);
+                    window.location.protocol = "http:";
+                    window.location = "http://"+data.replace('"','')+":32001";
+                    // console.log(window.location);
+                    window.close();
+                    window.open("http://"+data.replace('"','')+":32001", '_blank');
                 });
             });
         </script>

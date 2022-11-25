@@ -9,7 +9,7 @@
                 console.log(appIdHacking);
                 $.get( "https://us-east-1.aws.data.mongodb-api.com/app/"+appIdHacking+"/endpoint/whichMEC", function( data ) {
                     console.log(data);
-                    $( "#heading" ).html( "Sending you to " +data+ "..." );
+                    $( "#heading" ).html( "Sending you to <a href='http://"+data+":32001'>" +data+ "</a>..." );
                     window.location.protocol = "http:";
                     window.location = "http://"+data.replace('"','')+":32001";
                     // console.log(window.location);

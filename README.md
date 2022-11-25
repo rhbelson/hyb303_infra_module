@@ -1,11 +1,5 @@
-# Infrastructure Template for HYB-303 Workshop
-This infrastructure template automates the requisite components for modules 1-5 of the AWS re:Invent HYB-303 workshop.
-- Module 1: iPerf test on AWS Wavelength EC2 instance
-- Module 2: WebRTC streaming and video inference on AWS Local Zones EC2 instance
-- Module 3: Pixel streaming on AWS Local Zones EC2 instance
-- Module 4: EKS core infrastructure setup
-- Module 5: IoT data streaming using MongoDB on AWS EKS cluster 
-
+# Infrastructure Template for Hybrid Edge Workshop
+This infrastructure template automates the requisite components for this hybrid edge workshop.
 
 ## Prerequsities
 To run this infrastructure you must have:
@@ -26,7 +20,7 @@ Should you choose to rename the key, please adjust the variable `worker_key_name
 To run the infrastructure template, clone this repo and run the following:
 ```
 git clone https://github.com/rhbelson/hyb303_infra_module.git
-cd [repo-name]
+hyb303_infra_module
 terraform init
 terraform apply -auto-approve
 ```
